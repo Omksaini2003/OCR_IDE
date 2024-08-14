@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { extractTextFromImage } from './utility/textExtractor';
+import SnippingTool from './SnippingTool';
+import DragAndDropImageUpload from './DragAndDropImageUpload';
 
-const ImageTextExtractor = ({ onExtractComplete }) => {
+const ImageTextExtractor = ({onExtractComplete }) => {
+      
       const [imageFile, setImageFile] = useState(null);
       const [isLoading, setIsLoading] = useState(false);
+
 
       const handleImageChange = (e) => {
             if (e.target.files && e.target.files[0]) {
@@ -29,8 +33,13 @@ const ImageTextExtractor = ({ onExtractComplete }) => {
             }
       };
 
+      const handleImageFileChange = (file) => {
+            setImageFile(file);
+      };
+
       return (
             <div>
+                  <DragAndDropImageUpload setImageFile={handleImageFileChange} imageFile={imageFile} />
                   <input
                         type="file"
                         accept="image/*"
