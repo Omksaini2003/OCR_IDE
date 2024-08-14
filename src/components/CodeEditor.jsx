@@ -5,7 +5,7 @@ import LanguageSelector from "./LanguageSelector"
 import { CODE_SNIPPETS } from '../constants'
 import Output from './Output'
 import ImageTextExtractor from './ImageTextExtractor'
-
+import DragAndDropImageUpload from './DragAndDropImageUpload'
 
 const CodeEditor = () => {
 	const editorRef = useRef()
@@ -28,7 +28,9 @@ const CodeEditor = () => {
 
 	return (
 		<Box>
-			<ImageTextExtractor onExtractComplete={setValue} />
+			<ImageTextExtractor
+				onExtractComplete={setValue}
+			/>
 			<HStack>
 				<Box w="50%">
 					<LanguageSelector language={language} onSelect={onSelect} />
