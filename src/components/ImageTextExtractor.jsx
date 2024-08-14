@@ -4,15 +4,10 @@ import SnippingTool from './SnippingTool';
 import DragAndDropImageUpload from './DragAndDropImageUpload';
 
 const ImageTextExtractor = ({onExtractComplete }) => {
-      // const [draggedImageFile, setDraggedImageFile] = useState(null);
+      
       const [imageFile, setImageFile] = useState(null);
       const [isLoading, setIsLoading] = useState(false);
 
-      // useEffect(() => {
-      //       if (draggedImageFile) {
-      //             setImageFile(draggedImageFile);
-      //       }
-      // },[draggedImageFile]);
 
       const handleImageChange = (e) => {
             if (e.target.files && e.target.files[0]) {
@@ -38,9 +33,13 @@ const ImageTextExtractor = ({onExtractComplete }) => {
             }
       };
 
+      const handleImageFileChange = (file) => {
+            setImageFile(file);
+      };
+
       return (
             <div>
-                  <DragAndDropImageUpload setImageFile={setImageFile} />
+                  <DragAndDropImageUpload setImageFile={handleImageFileChange} imageFile={imageFile} />
                   <input
                         type="file"
                         accept="image/*"
