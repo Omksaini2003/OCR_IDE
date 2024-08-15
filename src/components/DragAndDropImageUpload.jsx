@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const DragAndDropImageUpload = ({ imageFile, setImageFile }) => {
+const DragAndDropImageUpload = ({ imageFile, setImageFile, handleExtract }) => {
 	const [image, setImage] = useState(imageFile ? URL.createObjectURL(imageFile) : null);
 	const [error, setError] = useState('');
 
@@ -20,30 +20,47 @@ const DragAndDropImageUpload = ({ imageFile, setImageFile }) => {
 	const handleDrop = (e) => {
 		e.preventDefault();
 		const files = e.dataTransfer.files;
+		handleFiles(files);
+	};
 
+	const handleDragOver = (e) => {
+		e.preventDefault();
+	};
+
+	const handleRemoveImage = (e) => {
+		e.stopPropagation();
+		setImage(null);
+		setImageFile(null);
+		setError('');
+	};
+
+	const handleClick = () => {
+		if (!imageFile) {
+			document.getElementById('fileInput').click();
+		}
+	};
+
+	const handleFileInputChange = (e) => {
+		const files = e.target.files;
+		handleFiles(files);
+	};
+
+	const handleFiles = (files) => {
 		if (files.length > 0) {
 			const file = files[0];
 			if (file.type.startsWith('image/')) {
 				setImageFile(file);
 			} else {
-				setError('Please drop an image file.');
+				setError('Please select an image file.');
 			}
 		}
-	};
-	const handleDragOver = (e) => {
-		e.preventDefault();
-	};
-
-	const handleRemoveImage = () => {
-		setImage(null);
-		setImageFile(null);
-		setError('');
 	};
 
 	return (
 		<div
 			onDrop={handleDrop}
 			onDragOver={handleDragOver}
+			onClick={handleClick}
 			style={{
 				width: '100%',
 				height: '200px',
@@ -61,6 +78,13 @@ const DragAndDropImageUpload = ({ imageFile, setImageFile }) => {
 				position: 'relative',
 			}}
 		>
+			<input
+				id="fileInput"
+				type="file"
+				accept="image/*"
+				onChange={handleFileInputChange}
+				style={{ display: 'none' }}
+			/>
 			{image && (
 				<button
 					onClick={handleRemoveImage}
@@ -83,7 +107,6 @@ const DragAndDropImageUpload = ({ imageFile, setImageFile }) => {
 					}}
 				>
 					×
-					{/* <img src='../assets/cross.jpeg'/> */}
 				</button>
 			)}
 			{image ? (
@@ -93,7 +116,7 @@ const DragAndDropImageUpload = ({ imageFile, setImageFile }) => {
 					style={{ maxWidth: '100%', maxHeight: '100%' }}
 				/>
 			) : (
-				<p>Drag & drop an image here, or click to select</p>
+				<p style={{color:'black'}}>Drag & drop an image here, or click to select</p>
 			)}
 			{error && <p style={{ color: 'red' }}>{error}</p>}
 		</div>
