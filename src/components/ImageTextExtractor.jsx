@@ -1,19 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { extractTextFromImage } from './utility/textExtractor';
-import SnippingTool from './SnippingTool';
 import DragAndDropImageUpload from './DragAndDropImageUpload';
 
-const ImageTextExtractor = ({onExtractComplete }) => {
-      
+const ImageTextExtractor = ({ onExtractComplete }) => {
       const [imageFile, setImageFile] = useState(null);
       const [isLoading, setIsLoading] = useState(false);
-
-
-      const handleImageChange = (e) => {
-            if (e.target.files && e.target.files[0]) {
-                  setImageFile(e.target.files[0]);
-            }
-      };
 
       const handleExtract = async () => {
             if (!imageFile) {
@@ -38,19 +29,17 @@ const ImageTextExtractor = ({onExtractComplete }) => {
       };
 
       return (
-            <div>
-                  <DragAndDropImageUpload setImageFile={handleImageFileChange} imageFile={imageFile} />
-                  <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        disabled={isLoading}
+            <div style={{ color: 'white' }}>
+                  <DragAndDropImageUpload
+                        setImageFile={handleImageFileChange}
+                        imageFile={imageFile}
+                        handleExtract={handleExtract}
                   />
                   <button
                         onClick={handleExtract}
                         disabled={isLoading || !imageFile}
                   >
-                        {isLoading ? 'Extracting...' : 'Extract Text'}
+                        {isLoading ? 'Extracting...' : ' Extract Text '}
                   </button>
             </div>
       );
