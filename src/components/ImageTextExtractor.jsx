@@ -36,11 +36,21 @@ const ImageTextExtractor = ({ onExtractComplete }) => {
                         handleExtract={handleExtract}
                   />
                   <button
-                        onClick={handleExtract}
-                        disabled={isLoading || !imageFile}
+                  onClick={handleExtract}
+                  disabled={isLoading || !imageFile}
+                  style={{
+                  backgroundColor: isLoading ? '#cccccc' : '#007bff', // change the background color based on loading state
+                  color: '#ffffff', // text color
+                  border: 'none', // remove default border
+                  padding: '10px 20px', // padding
+                  borderRadius: '5px', // rounded corners
+                  cursor: isLoading || !imageFile ? 'not-allowed' : 'pointer', // cursor change based on button state
+                  fontSize: '16px', // text size
+                  }}
                   >
-                        {isLoading ? 'Extracting...' : ' Extract Text '}
+                  {isLoading ? 'Extracting...' : 'Extract Text'}
                   </button>
+
             </div>
       );
 };
